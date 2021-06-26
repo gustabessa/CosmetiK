@@ -1,0 +1,18 @@
+@charset "UTF-8";
+
+.sucesso {
+	width: 500px;
+	height: 2em;
+	line-height: 2em;
+	margin-top: 10px;
+	text-align: center;
+	background-color: green;
+}
+
+.input-erro {
+	border-color: red;
+}
+
+.texto-erro {
+	color: red;
+}

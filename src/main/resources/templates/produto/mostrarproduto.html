@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="pt-BR" layout:decorate="~{layout/layoutpadrao}" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.thymeleaf.org">
+<head>
+	<title>Pesquisar Produto</title>
+	<meta charset="UTF-8">
+</head>
+<body>
+	<div layout:fragment="conteudo" class="d-flex flex-grow-1" id="conteudo">
+		<div th:replace="~{layout/fragments/menuslaterais :: menulateral}"></div>
+		<div class="container">
+			<h1 class="mb-5 mt-5">Produtos</h1>
+
+			<table class="table table-striped table-hover table-responsive align-middle mb-5">
+				<thead>
+					<tr>
+						<th scope="col">Codigo</th>
+						
+						<div th:replace="~{fragments/paginacao :: coluna(${pagina}, 'nome', 'Nome')}"></div>
+						<th scope="col">Preço</th>
+						<th />
+						<!-- 
+						<th /> 
+						-->
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="contato : ${pagina.conteudo}" th:object="${contato}">
+						<th scope="row" th:text="*{codigo}"></th>
+						<td th:text="*{nome}"></td>
+						<td th:text="*{preco}"></td>
+						<td>
+							<form action="#" th:action="@{/produto/buscar}" method="post">
+								<input type="hidden" name="idProduto" th:value="*{codigo}">
+								<button type="submit" class="btn btn-warning btn-floating">
+									<i class="bi bi-pencil"></i>
+								</button>
+							</form>
+						</td>
+						<!-- 
+						<td>
+							<form action="#" th:action="@{/contatos/confirmarremocao}" method="post">
+								<input type="hidden" name="idContato" th:value="*{idContato}">
+								<input type="hidden" name="nome" th:value="*{nome}">
+								<input type="hidden" name="endereco" th:value="*{endereco}">
+								<input type="hidden" name="telefone" th:value="*{telefone}">
+								<input type="hidden" name="email" th:value="*{email}">
+								<button type="submit" class="btn btn-danger btn-floating">
+									<i class="bi bi-trash"></i>
+								</button>
+							</form>
+						</td>
+						-->
+					</tr>
+					<tr th:if="${pagina.vazia}">
+						<td colspan="7">Nenhum produto encontrado</td>
+					</tr>
+				</tbody>
+			</table>
+
+			<div th:replace="~{fragments/paginacao :: paginacao(${pagina})}"></div>		
+			
+			<a th:href="@{/}" class="link-primary">Voltar</a>
+		</div>
+	</div>
+
+	<th:block layout:fragment="scripts">
+	</th:block>
+</body>
+</html>
