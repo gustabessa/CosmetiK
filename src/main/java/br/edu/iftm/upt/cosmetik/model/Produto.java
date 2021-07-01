@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name = "produto")
@@ -22,6 +23,11 @@ public class Produto implements Serializable {
 	private String nome;
 	
 	private BigDecimal preco;
+	
+	private Boolean ativo;
+	
+	@Transient
+	private Integer quantidade;
 
 	public Long getCodigo() {
 		return codigo;
@@ -43,8 +49,24 @@ public class Produto implements Serializable {
 		return preco;
 	}
 
+	public Integer getQuantidade() {
+		return quantidade;
+	}
+
+	public void setQuantidade(Integer quantidade) {
+		this.quantidade = quantidade;
+	}
+
 	public void setPreco(BigDecimal preco) {
 		this.preco = preco;
+	}
+
+	public Boolean getAtivo() {
+		return ativo;
+	}
+
+	public void setAtivo(Boolean ativo) {
+		this.ativo = ativo;
 	}
 	
 }

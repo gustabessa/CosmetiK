@@ -10,7 +10,9 @@ import br.edu.iftm.upt.cosmetik.model.Produto;
 
 public interface ProdutoRepository extends JpaRepository<Produto, Long> {
 
-	@Query("SELECT P FROM Produto P")
-	Page<Produto> pesquisar(Pageable paginado);
+	@Query("SELECT P FROM Produto P"
+			+ "	WHERE P.ativo = true"
+			+ "		AND (:nomeF IS NULL OR UPPER(P.nome) LIKE :nomeF)")
+	Page<Produto> pesquisar(String nomeF, Pageable paginado);
 	
 }

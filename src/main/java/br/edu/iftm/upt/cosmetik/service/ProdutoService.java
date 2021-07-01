@@ -25,7 +25,11 @@ public class ProdutoService {
 	}
 
 	public Page<Produto> pesquisar(ProdutoFilter filtro, Pageable paginado) {
-		return produtoRepository.pesquisar(paginado);
+		String nomeF = filtro.getNomeF();
+		if (nomeF != null) {
+			nomeF = "%".concat(nomeF.toUpperCase()).concat("%");
+		}
+		return produtoRepository.pesquisar(nomeF, paginado);
 	}
 
 	public Produto buscarPorId(Long idProduto) {

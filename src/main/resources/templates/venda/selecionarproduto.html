@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="pt-BR" layout:decorate="~{layout/layoutpadrao}"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.thymeleaf.org">
+<head>
+<title>Selecionar Produto</title>
+<meta charset="UTF-8">
+</head>
+<body>
+	<div layout:fragment="conteudo" class="d-flex flex-grow-1"
+		id="conteudo">
+		<div th:replace="~{layout/fragments/menuslaterais :: menulateral}"></div>
+		<div class="col-10 p-5">
+			<h1 class="text-center">Selecionar Produto</h1>
+			<form th:action="@{/venda/selecionarproduto}" method="post"
+				th:object="${produto}">
+				<input type="hidden" th:field="*{codigo}">
+				<div class="col-md-6 offset-md-3 col-xs-12">	
+					<p>
+						<label for="nome">Nome:</label> <input class="form-control" type="text" id="nome"
+							th:field="*{nome}" autofocus="autofocus" disabled>
+							<input class="form-control" type="hidden" id="nome"
+							th:field="*{nome}" autofocus="autofocus">
+					</p>
+					<p>
+						<label for="preco">Preço:</label> <input class="form-control" type="text" id="preco"
+                            autocomplete="off" th:field="*{preco}" disabled>
+							<input class="form-control" type="hidden" id="preco"
+							th:field="*{preco}" autofocus="autofocus">
+					</p>
+					<p>
+						<label for="quantidade">Quantidade:</label> <input class="form-control" type="number" id="quantidade"
+                            autocomplete="off"
+							th:field="*{quantidade}">
+					</p>
+				</div>
+				
+				<br>
+				<div class="text-center">
+					<input type="submit" class="btn btn-primary" value="Selecionar" />
+				</div> 
+			</form>
+			<p class="text-center">
+				<a href="#" th:href="@{/venda/produtos}">Voltar para a busca de produtos</a>
+			</p>
+		</div>
+		
+	</div>
+
+	<th:block layout:fragment="scripts">
+		<script
+		  src="https://code.jquery.com/jquery-3.6.0.min.js"
+		  integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+		  crossorigin="anonymous"></script>
+		<script th:src="@{/js/jquery.mask.min.js}"></script>		
+
+	<script>
+		$('#preco').maskMoney({prefix: 'R$ ', affixesStay: false, thousands: ''});
+	</script>
+	</th:block>
+</body>
+</html>

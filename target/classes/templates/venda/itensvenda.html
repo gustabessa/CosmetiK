@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="pt-BR" layout:decorate="~{layout/layoutpadrao}" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.thymeleaf.org">
+<head>
+	<title>Carrinho</title>
+	<meta charset="UTF-8">
+</head>
+<body>
+	<div layout:fragment="conteudo" class="d-flex flex-grow-1" id="conteudo">
+		<div th:replace="~{layout/fragments/menuslaterais :: menulateral}"></div>
+		<div class="container">
+			<h1 class="mb-5 mt-5">Carrinho</h1>
+			
+			<table class="table table-striped table-hover table-responsive align-middle mb-5">
+				<thead>
+					<tr>
+						<th scope="col">Item</th>
+						<th scope="col">Nome</th>
+						<th scope="col">Valor unitário</th>
+						<th scope="col">Quantidade</th>
+						<th scope="col">Valor total</th>
+						<th scope="col"/>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="item : ${itens}" th:object="${item}">
+						<th scope="row" th:text="*{numItem}"></th>
+						<td th:text="*{produto.nome}"></td>
+						<td th:text="*{vlrUnitario}"></td>
+						<td th:text="*{quantidade}"></td>
+						<td th:text="*{vlrTotal}"></td>
+						<td>
+							<form action="#" th:action="@{/venda/removeritem}" method="get">
+								<input type="hidden" name="numItem" th:value="*{numItem}">
+								<button type="submit" class="btn btn-danger btn-floating">
+									<i class="bi bi-cart-x"></i>
+								</button>
+							</form>
+						</td>
+					</tr>
+					<tr th:if="${itens.isEmpty()}">
+						<td colspan="7">Nenhum item na venda</td>
+					</tr>
+				</tbody>
+			</table>
+			<div class="w-100" style="text-align: right;">
+				<strong>Total da venda: </strong><strong th:text="${vlrTotal}" />
+			</div>
+			
+			<form th:if="${!itens.isEmpty()}" action="#" th:action="@{/venda/finalizar}" method="post">
+				<div class="text-center">
+					<input type="submit" class="btn btn-primary" value="Finalizar" />
+				</div> 
+			</form>
+
+			<a th:href="@{/}" class="link-primary">Voltar</a>
+		</div>
+	</div>
+
+	<th:block layout:fragment="scripts">
+	</th:block>
+</body>
+</html>

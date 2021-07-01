@@ -18,4 +18,12 @@ public class UsuarioService {
 	public void salvar(Usuario usuario) {
 		usuarioRepository.save(usuario);
 	}
+
+	public Boolean usuarioJaExistente(String nomeUsuario) {
+		return usuarioRepository.countByNomeUsuario(nomeUsuario) > 0L;
+	}
+
+	public Usuario buscarPorNomeUsuario(String nomeUsuario) {
+		return usuarioRepository.findByNomeUsuario(nomeUsuario);
+	}
 }

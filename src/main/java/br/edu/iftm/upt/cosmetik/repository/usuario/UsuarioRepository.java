@@ -6,4 +6,8 @@ import br.edu.iftm.upt.cosmetik.model.Usuario;
 
 public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
 
+	Long countByNomeUsuario(String nomeUsuario);
+
+	Usuario findByNomeUsuario(String nomeUsuario);
+
 }

@@ -15,10 +15,17 @@
 							<a class="nav-link" href="#" th:href="@{/usuario/novo}">Inserir</a>
 						</div>
 					</span>
-					<a class="nav-link active" href="#" role="button" data-bs-toggle="collapse" data-bs-target="#submenu2">Produto</a>
-					<div class="ms-3 show" id="submenu2">
-						<a class="nav-link" href="#" th:href="@{/produto/novo}">Inserir</a>
-						<a class="nav-link" href="#" th:href="@{/produto/pesquisar}">Pesquisar</a>
+					<span sec:authorize="hasRole('ROLE_ADMIN')">
+						<a class="nav-link active" href="#" role="button" data-bs-toggle="collapse" data-bs-target="#submenu2">Produto</a>
+						<div class="ms-3 show" id="submenu2">
+							<a class="nav-link" href="#" th:href="@{/produto/novo}">Inserir</a>
+							<a class="nav-link" href="#" th:href="@{/produto/pesquisar}">Pesquisar</a>
+						</div>					
+					</span>
+					<a class="nav-link active" href="#" role="button" data-bs-toggle="collapse" data-bs-target="#submenu3">Venda</a>
+					<div class="ms-3 show" id="submenu3">
+						<a class="nav-link" href="#" th:href="@{/venda/produtos}">Produtos</a>
+						<a class="nav-link" href="#" th:href="@{/venda/itensvenda}">Carrinho</a>
 					</div>
 				</div>
 			</div>

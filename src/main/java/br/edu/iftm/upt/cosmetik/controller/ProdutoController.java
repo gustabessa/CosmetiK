@@ -54,6 +54,7 @@ public class ProdutoController {
 
 		ModelAndView mv = new ModelAndView("produto/mostrarproduto");
 		mv.addObject("pagina", paginaWrapper);
+		mv.addObject("filtro", filtro);
 
 		return mv;
 	}
@@ -79,4 +80,32 @@ public class ProdutoController {
 		return mv;
 	}
 	
+	@PostMapping("/editar") 
+	public ModelAndView editar(Produto produto) {
+		BigDecimal preco = produto.getPreco();
+		if (produto.getNome().trim() != "" && preco != null) {
+			produtoService.salvar(produto);
+			return new ModelAndView("redirect:/produto/pesquisar");
+		}
+		return new ModelAndView("produto/editarproduto");
+	}
+	
+	@PostMapping("/remover") 
+	public ModelAndView remover(Produto produto) {
+		ModelAndView mv;
+		if (produto.getCodigo() != null) {
+			produto.setAtivo(false);
+			produtoService.salvar(produto);
+			return new ModelAndView("redirect:/produto/pesquisar");
+		}
+		mv = new ModelAndView();
+		mv.setViewName("mostrarmensagem");
+		mv.addObject("mensagem", "Use um valor válido de codigo.");
+		return mv;
+	}
+	
+	@PostMapping("/confirmarremocao")
+	public ModelAndView direcionarConfirmarRemocao(Produto produto) {
+		return new ModelAndView("produto/confirmarremocao");
+	}
 }

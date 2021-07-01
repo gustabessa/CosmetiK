@@ -39,7 +39,11 @@ public class UsuarioController {
 	@PostMapping("/novo")
 	public ModelAndView cadastrarNovoUsuario(Usuario usuario) {
 		ModelAndView mv;
-		if (!usuario.getPapeis().isEmpty()) {
+		Boolean jaExistente = true;
+		if (usuario.getNomeUsuario() != null && !usuario.getNomeUsuario().trim().isEmpty()) {			
+			jaExistente = usuarioService.usuarioJaExistente(usuario.getNomeUsuario());
+		}
+		if (!usuario.getPapeis().isEmpty() && !jaExistente) {
 			usuario.setAtivo(true);
 			usuario.setSenha(passwordEncoder.encode(usuario.getSenha()));
 			usuarioService.salvar(usuario);

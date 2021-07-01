@@ -8,9 +8,9 @@
 	<div layout:fragment="conteudo" class="d-flex flex-grow-1" id="conteudo">
 		<div th:replace="~{layout/fragments/menuslaterais :: menulateral}"></div>
 		<div class="container">
-			<h1 class="mb-5 mt-5">Produtos</h1>
+			<h1 class="mb-5 mt-5">Venda</h1>
 			
-			<form th:action="@{/produto/pesquisar}" method="GET"
+			<form th:action="@{/venda/produtos}" method="GET"
 				th:object="${filtro}">
 				<div class="col-md-6 offset-md-3 col-xs-12">	
 					<p>
@@ -33,7 +33,6 @@
 						<div th:replace="~{fragments/paginacao :: coluna(${pagina}, 'nome', 'Nome')}"></div>
 						<th scope="col">Preço</th>
 						<th scope="col"/>
-						<th scope="col"/> 
 					</tr>
 				</thead>
 				<tbody>
@@ -42,20 +41,10 @@
 						<td th:text="*{nome}"></td>
 						<td th:text="*{preco}"></td>
 						<td>
-							<form action="#" th:action="@{/produto/buscar}" method="post">
+							<form action="#" th:action="@{/venda/selecionarproduto}" method="get">
 								<input type="hidden" name="idProduto" th:value="*{codigo}">
-								<button type="submit" class="btn btn-warning btn-floating">
-									<i class="bi bi-pencil"></i>
-								</button>
-							</form>
-						</td>
-						<td>
-							<form action="#" th:action="@{/produto/confirmarremocao}" method="post">
-								<input type="hidden" name="codigo" th:value="*{codigo}">
-								<input type="hidden" name="nome" th:value="*{nome}">
-								<input type="hidden" name="preco" th:value="*{preco}">
-								<button type="submit" class="btn btn-danger btn-floating">
-									<i class="bi bi-trash"></i>
+								<button type="submit" class="btn btn-success btn-floating">
+									<i class="bi bi-cart-plus"></i>
 								</button>
 							</form>
 						</td>

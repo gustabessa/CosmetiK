@@ -37,7 +37,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.and()
 				// A autenticação usando formulário está habilitada
 				.formLogin()
-				.defaultSuccessUrl("/");
+				.defaultSuccessUrl("/sessionauthenticate");
 	}
 
 	// Autenticacao JDBC

@@ -24,6 +24,13 @@
 						</a>
 					</p>
      			</div>
+				<div class="navbar-text mb-0" sec:authorize="!isAuthenticated()">
+					<p class="navbar-text mb-0 ms-2">
+						<a th:href="@{/login}">
+							<i class="bi bi-box-arrow-in-right"></i>
+						</a>
+					</p>
+     			</div>
 			</div>
 		</div>
 	</nav>
