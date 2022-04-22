@@ -29,11 +29,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers("/css/**", "/js/**", "/images/**", "/", "/index.html").permitAll()
 				// Um usuário autenticado e com o papel ADMIN pode fazer requisições para essas
 				// URLs
-				//.antMatchers("/**").hasRole("ADMIN")
-				.antMatchers("/**").permitAll()
-				//.antMatchers("/usuario/novo").hasRole("ADMIN")
-				//.anyRequest().authenticated()
-				// .antMatchers("URL").hasAnyRole("ADMIN", "USUARIO")
+				.antMatchers("/usuario/**").hasRole("ADMIN")
+				.antMatchers("/produto/novo").hasRole("ADMIN")
+				.antMatchers("/venda/**").hasAnyRole("ADMIN", "USUARIO")
+				.anyRequest().authenticated()
 				.and()
 				// A autenticação usando formulário está habilitada
 				.formLogin()
@@ -57,12 +56,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 		String idEncoder = "bcrypt";
 		Map<String, PasswordEncoder> encoders = new HashMap<>();
-		// encoders.put("argon2", new Argon2PasswordEncoder());
 		encoders.put("noop", NoOpPasswordEncoder.getInstance());
 		encoders.put("bcrypt", new BCryptPasswordEncoder());
-		// encoders.put("pbkdf2", new Pbkdf2PasswordEncoder());
-		// encoders.put("scrypt", new SCryptPasswordEncoder());
-		// encoders.put("sha256", new StandardPasswordEncoder());
 		PasswordEncoder passwordEncoder = new DelegatingPasswordEncoder(idEncoder, encoders);
 
 		return passwordEncoder;

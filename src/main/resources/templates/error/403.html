@@ -3,14 +3,14 @@
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.thymeleaf.org">
 <head>
-	<title>Mensagem</title>
+	<title>Acesso negado.</title>
 	<meta charset="UTF-8">
 </head>
 <body>
 	<div layout:fragment="conteudo" class="d-flex flex-grow-1" id="conteudo">
 		<div th:replace="~{layout/fragments/menuslaterais :: menulateral}"></div>
 		<div class="col-10 p-5">
-			<h1 class="text-center" th:text="${mensagem}">Mensagem</h1>
+			<h1 class="text-center">Você não tem permissão para acessar a página solicitada.</h1>
 			<br>
 			<a th:href="@{/}">Voltar</a>
 		</div>

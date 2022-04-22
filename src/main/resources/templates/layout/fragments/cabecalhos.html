@@ -10,15 +10,14 @@
 		<div class="container-fluid">
 			<!--  Logo da empresa -->
 			<a class="navbar-brand" href="#" th:href="@{/}">
-				<img th:src="@{/images/logo.jpeg}" alt="logo" width="60" height="24" class="d-inline-block align-text-top">
-				CosmetiK
+				<img th:src="@{/images/cosmetik.gif}" alt="logo" width="262" height="44" class="d-inline-block align-text-top">
  			</a>
 
 			<!-- Parte da direita -->
 			<div class="d-flex flex-row align-items-center">
 				<div class="navbar-text mb-0" sec:authorize="isAuthenticated()">
 					<p class="navbar-text mb-0 ms-2">
-						<span sec:authentication="name"></span>
+						<span sec:authentication="name"></span>	
 						<a th:href="@{/logout}">
 							<i class="bi bi-box-arrow-right"></i>
 						</a>

@@ -20,6 +20,40 @@ public class Application {
 	private static final Logger logger = LoggerFactory.getLogger(Application.class);
 
 	public static void main(String[] args) {
+//		ArrayList<String> teste = new ArrayList<String>();
+//		Thread t1 = new Thread(() -> {
+//			try {
+//				Thread.sleep(1000);
+//				teste.add("1");
+//			} catch (InterruptedException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+//		});
+//		Thread t2 = new Thread(() -> {
+//			teste.add("2");
+//		});
+//		Thread t3 = new Thread(() -> {
+//			teste.add("3");
+//		});
+//		Thread t4 = new Thread(() -> {
+//			teste.add("4");
+//		});
+//		
+//		
+//		t1.run();
+//		t2.run();
+//		t3.run();
+//		t4.run();
+//		try {
+//			t1.join();
+//			t2.join();
+//			t3.join();
+//			t4.join();			
+//		} catch (Exception e) {
+//		}
+//		
+//		System.out.println(teste);
 		logger.info(">>>> Iniciando a execucao da aplicacao");
 		SpringApplication.run(Application.class, args);
 		logger.info(">>>> Aplicacao inicializada");

@@ -38,6 +38,9 @@ public class IndexController {
 	
 	@GetMapping("/mostrarmensagem")
 	public ModelAndView mostrarMensagem(String mensagem) {
+		if (mensagem == null || mensagem.isEmpty()) {
+			mensagem = "Não há mensagens do sistema.";
+		}
 		ModelAndView mv = new ModelAndView("mostrarmensagem");
 		mv.addObject("mensagem", mensagem);
 		return mv;

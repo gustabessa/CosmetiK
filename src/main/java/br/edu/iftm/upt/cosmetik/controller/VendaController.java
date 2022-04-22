@@ -16,6 +16,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.data.web.SortDefault;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -31,6 +33,7 @@ import br.edu.iftm.upt.cosmetik.model.Venda;
 import br.edu.iftm.upt.cosmetik.pagination.PageWrapper;
 import br.edu.iftm.upt.cosmetik.service.ItemVendaService;
 import br.edu.iftm.upt.cosmetik.service.ProdutoService;
+import br.edu.iftm.upt.cosmetik.service.UsuarioService;
 import br.edu.iftm.upt.cosmetik.service.VendaService;
 
 @Controller
@@ -47,19 +50,21 @@ public class VendaController {
 	@Autowired
 	private ItemVendaService itemVendaService;
 	
+	@Autowired
+	private UsuarioService usuarioService;
+	
 	@GetMapping("/produtos")
 	public ModelAndView pesquisarProdutos(ProdutoFilter filtro, @PageableDefault(size = 5)
 		    @SortDefault(sort = "nome", direction = Sort.Direction.ASC)
-		    Pageable paginado, HttpServletRequest request) {
-		
+		    Pageable paginado, HttpServletRequest request, HttpSession sessao) {
+		ModelAndView mv = new ModelAndView("venda/mostrarproduto");
 		Page<Produto> pagina = produtoService.pesquisar(filtro, paginado);
 		
 		PageWrapper<Produto> paginaWrapper = new PageWrapper<>(pagina, request);
 		
-		ModelAndView mv = new ModelAndView("venda/mostrarproduto");
 		mv.addObject("pagina", paginaWrapper);
 		mv.addObject("filtro", filtro);
-		
+	
 		return mv;
 	}
 	
@@ -81,7 +86,10 @@ public class VendaController {
 	public ModelAndView selecionarProduto(Produto produto, RedirectAttributes atributos, HttpSession sessao) {
 		ModelAndView mv = new ModelAndView();
 		Integer quantidade = produto.getQuantidade();
+		List<String> mensagens = new ArrayList<String>();
 		if (quantidade == null || quantidade == 0) {
+			mensagens.add("Por favor, insira uma quantidade válida.");
+			mv.addObject("mensagens", mensagens);
 			mv.addObject(produto);
 			mv.setViewName("venda/selecionarproduto");
 		} else {
@@ -102,6 +110,7 @@ public class VendaController {
 	public ModelAndView exibirItensVenda(HttpSession sessao) {
 		ModelAndView mv = new ModelAndView();
 		List<ItemVenda> itens = (List<ItemVenda>) sessao.getAttribute("itens");
+		
 		if (itens == null) {
 			itens = new ArrayList<ItemVenda>();
 		}
@@ -138,6 +147,10 @@ public class VendaController {
 		ModelAndView mv = new ModelAndView("redirect:/mostrarmensagem");
 		atributos.addAttribute("mensagem", "Venda realizada com sucesso!");
 		Usuario usuario = (Usuario) sessao.getAttribute("usuario");
+		if (usuario == null) {
+			String nomeUsuario = ((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername();
+			usuario = usuarioService.buscarPorNomeUsuario(nomeUsuario);
+		}
 		List<ItemVenda> itens = (List<ItemVenda>) sessao.getAttribute("itens");
 		BigDecimal vlrTotal = itens.stream().map(item -> item.getVlrTotal()).reduce(BigDecimal.ZERO, BigDecimal::add);
 		

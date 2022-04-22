@@ -11,6 +11,10 @@
 		id="conteudo">
 		<div th:replace="~{layout/fragments/menuslaterais :: menulateral}"></div>
 		<div class="col-10 p-5">
+			<div th:each="mensagem : ${mensagens}">
+				<p class="text-center text-danger" th:text="*{mensagem}"></p>
+			</div>
+			<p class="text-center text-success" th:if="${mensagemSucesso != null}" th:text="${mensagemSucesso}"></p>
 			<h1 class="text-center">Cadastro de Usuário</h1>
 			<form th:action="@{/usuario/novo}" method="post"
 				th:object="${usuario}">

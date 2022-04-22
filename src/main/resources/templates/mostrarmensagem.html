@@ -1,13 +1,23 @@
 <!DOCTYPE html>
-<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<html lang="pt-BR" layout:decorate="~{layout/layoutpadrao}"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>Gerenciador de Vendas com Spring Boot</title>
+	<title>Mensagem</title>
+	<meta charset="UTF-8">
 </head>
 <body>
-	<h1 th:text="${mensagem}">Mensagem</h1>
+	<div layout:fragment="conteudo" class="d-flex flex-grow-1" id="conteudo">
+		<div th:replace="~{layout/fragments/menuslaterais :: menulateral}"></div>
+		<div class="col-10 p-5">
+			<h1 class="text-center" th:text="${mensagem}">Mensagem</h1>
+			<br>
+			<a th:href="@{/}">Voltar</a>
+		</div>
+	</div>
 
-	<a th:href="@{/}">Voltar</a>
+	<th:block layout:fragment="scripts">
+		<!-- <script src="../static/js/index.js" th:src="@{/js/index.js}"></script>  -->
+	</th:block>
 </body>
 </html>

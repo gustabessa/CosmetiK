@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.16.0.final using JasperReports Library version 6.16.0-48579d909b7943b64690c65c71e07e0b80981928  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="subrelatorio_itens_venda" pageWidth="595" pageHeight="842" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="671fba2d-29f5-4047-b207-0dc50c27b57b">
+	<property name="com.jaspersoft.studio.data.sql.tables">
+		<![CDATA[cHJvZHV0byAsMTU4LDU1LDE0MDgyOWE3LTZjM2YtNDY4YS1hZmM2LWFkYzc5ZTlkMGFiYztpdGVt
+X3ZlbmRhICwxNSwxNSxiM2FlMzRjMy04YWUyLTQwZmUtYTAxOS05ZGI4NjY2YTViNDI7]]>
+	</property>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="New Data Adapter (2)"/>
+	<parameter name="CODIGOITEMVENDA" class="java.lang.Long"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT item_venda.codigo,
+	item_venda.num_item,
+	item_venda.quantidade,
+	item_venda.id_venda,
+	item_venda.id_produto,
+	item_venda.vlr_unitario,
+	item_venda.vlr_total,
+	produto.codigo AS codigoProduto,
+	produto.nome,
+	produto.preco,
+	produto.ativo
+FROM item_venda
+	INNER JOIN produto ON 
+	 item_venda.id_produto = produto.codigo 
+WHERE 
+	 item_venda.id_venda = $P{CODIGOITEMVENDA}]]>
+	</queryString>
+	<field name="codigo" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.name" value="codigo"/>
+		<property name="com.jaspersoft.studio.field.label" value="codigo"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="item_venda"/>
+	</field>
+	<field name="quantidade" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="quantidade"/>
+		<property name="com.jaspersoft.studio.field.label" value="quantidade"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="item_venda"/>
+	</field>
+	<field name="num_item" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="num_item"/>
+		<property name="com.jaspersoft.studio.field.label" value="num_item"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="item_venda"/>
+	</field>
+	<field name="id_venda" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.name" value="id_venda"/>
+		<property name="com.jaspersoft.studio.field.label" value="id_venda"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="item_venda"/>
+	</field>
+	<field name="id_produto" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.name" value="id_produto"/>
+		<property name="com.jaspersoft.studio.field.label" value="id_produto"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="item_venda"/>
+	</field>
+	<field name="vlr_unitario" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="vlr_unitario"/>
+		<property name="com.jaspersoft.studio.field.label" value="vlr_unitario"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="item_venda"/>
+	</field>
+	<field name="vlr_total" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="vlr_total"/>
+		<property name="com.jaspersoft.studio.field.label" value="vlr_total"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="item_venda"/>
+	</field>
+	<field name="codigoproduto" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.name" value="codigoproduto"/>
+		<property name="com.jaspersoft.studio.field.label" value="codigoproduto"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="produto"/>
+	</field>
+	<field name="nome" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="nome"/>
+		<property name="com.jaspersoft.studio.field.label" value="nome"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="produto"/>
+	</field>
+	<field name="preco" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="preco"/>
+		<property name="com.jaspersoft.studio.field.label" value="preco"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="produto"/>
+	</field>
+	<field name="ativo" class="java.lang.Boolean">
+		<property name="com.jaspersoft.studio.field.name" value="ativo"/>
+		<property name="com.jaspersoft.studio.field.label" value="ativo"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="produto"/>
+	</field>
+	<group name="codigo">
+		<groupExpression><![CDATA[$F{codigo}]]></groupExpression>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="21" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="80" height="20" uuid="869eaa52-3f5f-4d26-8662-2f1b1fb786cc"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{codigoproduto}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="315" y="0" width="80" height="20" uuid="44d2acbc-adb8-42b0-a0b9-7eb77e649a54"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{quantidade}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="395" y="0" width="80" height="20" uuid="fbf9fb24-d064-4ba4-a4d2-03584c994be2"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{vlr_unitario}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="475" y="0" width="80" height="20" uuid="476bb86c-88b0-4118-878e-02eda6ac898d"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{vlr_total}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="80" y="0" width="235" height="20" uuid="20995d34-5827-4c14-b520-942bf770927f"/>
+				<textFieldExpression><![CDATA[$F{nome}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

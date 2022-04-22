@@ -2,7 +2,9 @@
 <html lang="pt-BR" 
 	xmlns:th="http://www.thymeleaf.org"
 	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-
+<head>
+	<meta charset="UTF-8">
+</head>
 <body>
 	<!-- Menu Lateral -->
 	<aside th:fragment="menulateral" class="col-2">
@@ -12,7 +14,13 @@
 					<span sec:authorize="hasRole('ROLE_ADMIN')">
 						<a class="nav-link active" href="#" role="button" data-bs-toggle="collapse" data-bs-target="#submenu1">Usuario</a>
 						<div class="ms-3 show" id="submenu1">
-							<a class="nav-link" href="#" th:href="@{/usuario/novo}">Inserir</a>
+							<a class="nav-link" href="#" th:href="@{/usuario/novo}">Cadastrar</a>
+						</div>
+					</span>
+					<span sec:authorize="hasRole('ROLE_ADMIN')">
+						<a class="nav-link active" href="#" role="button" data-bs-toggle="collapse" data-bs-target="#submenu1">Relatório</a>
+						<div class="ms-3 show" id="submenu1">
+							<a class="nav-link" href="#" th:href="@{/relatorios/relatorioDeVendas}">Vendas</a>
 						</div>
 					</span>
 					<span sec:authorize="hasRole('ROLE_ADMIN')">

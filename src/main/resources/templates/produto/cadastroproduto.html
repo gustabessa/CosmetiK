@@ -11,13 +11,17 @@
 		id="conteudo">
 		<div th:replace="~{layout/fragments/menuslaterais :: menulateral}"></div>
 		<div class="col-10 p-5">
+			<div th:each="mensagem : ${mensagens}">
+				<p class="text-center text-danger" th:text="*{mensagem}"></p>
+			</div>
+			<p class="text-center text-success" th:if="${mensagemSucesso != null}" th:text="${mensagemSucesso}"></p>
 			<h1 class="text-center">Cadastro de Produto</h1>
 			<form th:action="@{/produto/novo}" method="post"
 				th:object="${produto}">
 				<div class="col-md-6 offset-md-3 col-xs-12">	
 					<p>
 						<label for="nome">Nome:</label> <input class="form-control" type="text" id="nome"
-							th:field="*{nome}" autofocus="autofocus">
+							th:field="*{nome}" autofocus="autofocus" autocomplete="off">
 					</p>
 					<p>
 						<label for="preco">Preço:</label> <input class="form-control" type="text" id="preco"

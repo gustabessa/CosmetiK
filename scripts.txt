@@ -1,0 +1,92 @@
+CREATE TABLE public.usuario
+(
+    codigo bigserial NOT NULL,
+    nome text COLLATE pg_catalog."default",
+    email text COLLATE pg_catalog."default",
+    senha text COLLATE pg_catalog."default",
+    usuario text COLLATE pg_catalog."default",
+    data_nascimento date,
+    ativo boolean,
+    CONSTRAINT usuario_pkey PRIMARY KEY (codigo)
+);
+
+CREATE TABLE public.papel
+(
+    codigo bigserial NOT NULL,
+    nome text COLLATE pg_catalog."default",
+    CONSTRAINT papel_pkey PRIMARY KEY (codigo)
+);
+
+CREATE TABLE public.usuario_papel
+(
+    codigo_usuario bigint NOT NULL,
+    codigo_papel bigint NOT NULL,
+    CONSTRAINT usuario_papel_codigo_papel_fkey FOREIGN KEY (codigo_papel)
+        REFERENCES public.papel (codigo) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+        NOT VALID,
+    CONSTRAINT usuario_papel_codigo_usuario_fkey FOREIGN KEY (codigo_usuario)
+        REFERENCES public.usuario (codigo) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+        NOT VALID
+);
+
+
+CREATE TABLE public.produto
+(
+    codigo bigserial NOT NULL,
+    nome text COLLATE pg_catalog."default",
+    preco numeric,
+    ativo boolean,
+    CONSTRAINT produto_pkey PRIMARY KEY (codigo)
+);
+
+CREATE TABLE public.venda
+(
+    codigo bigserial NOT NULL,
+    vlr_total numeric,
+    id_usuario bigint NOT NULL,
+    data_venda timestamp without time zone,
+    CONSTRAINT venda_pkey PRIMARY KEY (codigo),
+    CONSTRAINT fk_usuario_venda FOREIGN KEY (id_usuario)
+        REFERENCES public.usuario (codigo) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+);
+
+CREATE TABLE public.item_venda
+(
+    codigo bigserial NOT NULL,
+    num_item integer,
+    quantidade integer,
+    id_venda bigint NOT NULL,
+    id_produto bigint NOT NULL,
+    vlr_unitario numeric,
+    vlr_total numeric,
+    CONSTRAINT item_venda_pkey PRIMARY KEY (codigo),
+    CONSTRAINT fk_venda_item FOREIGN KEY (id_venda)
+        REFERENCES public.venda (codigo) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT fk_venda_produto FOREIGN KEY (id_produto)
+        REFERENCES public.produto (codigo) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+);
+
+insert into usuario (nome, email, senha, usuario, ativo) 
+values ('admin', 'admin@admin.com', '{noop}12345', 'admin', true),
+('comum', 'comum@comum.com', '{noop}12345', 'comum', true);
+
+insert into papel (nome) values ('ROLE_ADMIN'), ('ROLE_USUARIO');
+
+insert into usuario_papel (codigo_usuario, codigo_papel) values (1, 1), (2, 2);
+
+insert into produto (nome, preco, ativo) values ('Rexona', 10.0, true),
+('Rebimboca', 23.9, true),
+('Batom', 30.0, true),
+('Rímel', 34.9, true),
+('Shampoo', 43.45, true);
+

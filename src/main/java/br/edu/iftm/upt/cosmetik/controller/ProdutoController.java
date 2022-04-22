@@ -1,6 +1,8 @@
 package br.edu.iftm.upt.cosmetik.controller;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import br.edu.iftm.upt.cosmetik.filter.ProdutoFilter;
 import br.edu.iftm.upt.cosmetik.model.Produto;
@@ -35,13 +38,25 @@ public class ProdutoController {
 	}
 	
 	@PostMapping("/novo")
-	public ModelAndView cadastrarNovoUsuario(Produto produto) {
+	public ModelAndView cadastrarNovoProduto(Produto produto, RedirectAttributes atributos) {
+		ModelAndView mv = new ModelAndView();
+		List<String> mensagens = new ArrayList<String>();
 		BigDecimal preco = produto.getPreco();
-		if (produto.getNome().trim() != "" && preco != null) {
+		if (!produto.getNome().trim().isEmpty() && preco != null) {
+			produto.setAtivo(true);
 			produtoService.salvar(produto);
+			atributos.addFlashAttribute("mensagemSucesso", "Produto cadastrado com sucesso!");
 			return new ModelAndView("redirect:/produto/novo");
 		}
-		return new ModelAndView("produto/cadastroproduto");
+		if (produto.getNome().trim().isEmpty()) {
+			mensagens.add("Por favor, preencha o nome do produto.");
+		}
+		if (produto.getPreco() == null || produto.getPreco().equals(BigDecimal.ZERO)) {
+			mensagens.add("Por favor, preencha o preço do produto.");
+		}
+		mv.setViewName("produto/cadastroproduto");
+		mv.addObject("mensagens", mensagens);
+		return mv;
 	}
 	
 	@GetMapping("/pesquisar")
@@ -83,7 +98,7 @@ public class ProdutoController {
 	@PostMapping("/editar") 
 	public ModelAndView editar(Produto produto) {
 		BigDecimal preco = produto.getPreco();
-		if (produto.getNome().trim() != "" && preco != null) {
+		if (!produto.getNome().trim().equals("") && preco != null) {
 			produtoService.salvar(produto);
 			return new ModelAndView("redirect:/produto/pesquisar");
 		}
@@ -94,6 +109,7 @@ public class ProdutoController {
 	public ModelAndView remover(Produto produto) {
 		ModelAndView mv;
 		if (produto.getCodigo() != null) {
+			produto = produtoService.buscarPorId(produto.getCodigo());
 			produto.setAtivo(false);
 			produtoService.salvar(produto);
 			return new ModelAndView("redirect:/produto/pesquisar");
